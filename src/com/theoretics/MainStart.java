@@ -46,8 +46,8 @@ import org.apache.logging.log4j.Logger;
 
 public class MainStart {
 
-    String version = "v.3.0.8";
-    String entranceID = "Dispenser C";
+    String version = "v.3.0.9";
+    String entranceID = "Dispenser MRDH";
 
     String cardFromReader = "";
     boolean readerIsGood = false;
@@ -87,17 +87,6 @@ public class MainStart {
     final GpioPinDigitalInput btnPower = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04, PinPullResistance.PULL_UP);
     final GpioPinDigitalInput btnReset = gpio.provisionDigitalInputPin(RaspiPin.GPIO_20, PinPullResistance.PULL_UP);
 
-    //Deployed Booth A
-    /*
-    final GpioPinDigitalInput btnDispense = gpio.provisionDigitalInputPin(RaspiPin.GPIO_29, PinPullResistance.PULL_UP);
-    final GpioPinDigitalInput cardOutOK = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput cardIsTaken = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput dispenserError = gpio.provisionDigitalInputPin(RaspiPin.GPIO_25, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput binIsEmpty = gpio.provisionDigitalInputPin(RaspiPin.GPIO_24, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalOutput relayBarrier = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_08, "BARRIER", PinState.HIGH);
-    final GpioPinDigitalOutput transistorDispense = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_27, "DISPENSE", PinState.LOW);
-    final GpioPinDigitalOutput transistorReject = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_28, "REJECT", PinState.LOW);
-    */
     //Deployed Booth B
     
     final GpioPinDigitalInput btnDispense = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, PinPullResistance.PULL_UP);
@@ -109,40 +98,15 @@ public class MainStart {
     final GpioPinDigitalOutput transistorDispense = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "DISPENSE", PinState.LOW);
     final GpioPinDigitalOutput transistorReject = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "REJECT", PinState.LOW);
     
-    //Deployed Booth C
-    /*
-    final GpioPinDigitalInput btnDispense = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, PinPullResistance.PULL_UP);
-    final GpioPinDigitalInput cardOutOK = gpio.provisionDigitalInputPin(RaspiPin.GPIO_25, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput cardIsTaken = gpio.provisionDigitalInputPin(RaspiPin.GPIO_24, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput dispenserError = gpio.provisionDigitalInputPin(RaspiPin.GPIO_23, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalInput binIsEmpty = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, PinPullResistance.PULL_DOWN);
-    final GpioPinDigitalOutput relayBarrier = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_09, "BARRIER", PinState.HIGH);
-    final GpioPinDigitalOutput transistorDispense = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "DISPENSE", PinState.LOW);
-    final GpioPinDigitalOutput transistorReject = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "REJECT", PinState.LOW);
-    */
-
-    //Deployed Booth A
-//    final GpioPinDigitalInput carDetected = gpio.provisionDigitalInputPin(RaspiPin.GPIO_26, PinPullResistance.PULL_UP);
-    //Deployed Booth B
     final GpioPinDigitalInput carDetected = gpio.provisionDigitalInputPin(RaspiPin.GPIO_29, PinPullResistance.PULL_UP);
 
     final GpioPinDigitalOutput relayLights = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, "LIGHTS", PinState.HIGH);
     final GpioPinDigitalOutput relayFan = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "FAN", PinState.HIGH);
 
     public void startProgram() {
-        System.out.println(entranceID + " Tap Card Listener " + version);
-//        System.out.println(entranceID + " Tap Card Listener " + version);
+        System.out.println(entranceID + " new code " + version);
 
-//        Gson gson = new Gson();
-//
-//        String json = "{\"brand\":\"Jeep\", \"doors\": 3}";
-//
-//        VIPs car = gson.fromJson(json, VIPs.class);
-//        
-//        System.out.println(car.brand +"["+ car.doors + "]");
         try {
-            //welcomeAudioIn = AudioSystem.getAudioInputStream(MainStart.class.getResource("/sounds/welcome2stmichael.wav"));
-            //welcomeAudioIn = AudioSystem.getAudioInputStream(MainStart.class.getResource("/sounds/mrdh.wav"));
             welcomeAudioIn = AudioSystem.getAudioInputStream(MainStart.class.getResource("/sounds/welcome2mrdh.wav"));
             welcomeClip = AudioSystem.getClip();
             welcomeClip.open(welcomeAudioIn);
@@ -224,7 +188,9 @@ public class MainStart {
         Gpio.delay(1000);
         transistorDispense.setState(false);
         Gpio.delay(1000);
+        System.out.println("Transistors Ready!");
         
+        /*
         transistorReject.setState(false);
         Gpio.delay(1000);
         transistorReject.setState(true);
@@ -236,7 +202,7 @@ public class MainStart {
         Gpio.delay(1000);
         transistorReject.setState(false);
         System.out.println("Transistors Ready!");
-        
+        */
 //
 //        //Testing Barrier Relay
 //        relayBarrier.setState(false);
