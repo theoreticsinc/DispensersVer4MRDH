@@ -1,6 +1,6 @@
 /*Github Token
- * Modified for MRDH Apr 2025 07:55 AM
- * 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
+ * Modified for MRDH Apr 2025 17:29 PM
+ * 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
  */
 package com.theoretics;
 
@@ -30,6 +30,13 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.ConnectException;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousServerSocketChannel;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.nio.channels.CompletionHandler;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +48,9 @@ import javax.sound.sampled.Clip;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -377,6 +387,11 @@ public class MainStart {
 //                led1.high();
 //            }
             System.out.println("EOL");
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(MainStart.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         /**
@@ -1029,9 +1044,29 @@ public class MainStart {
 
     }
 
+    private void startAsyncListener(int PORT) {
+        try {
+
+            //s = new ServerSocket(PORT, 10, InetAddress.getLocalHost());
+            final AsynchronousServerSocketChannel listener
+                    = AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(PORT));
+            
+
+        } catch (UnknownHostException e) {
+            // shouldn't happen for localhost
+        } catch (Exception e) {
+            // port taken, so app is already running
+            System.out.print("Application is already running,");
+            System.out.println(" so terminating this instance.");
+            System.exit(0);
+        }
+    }
+
     
     public static void main(String[] args) throws InterruptedException {
+        int PORT = 8789;
         MainStart m = new MainStart();
+        m.startAsyncListener(PORT);
         m.setupLED();
 //        InfoClass i = new InfoClass();
 //        i.showInfo();

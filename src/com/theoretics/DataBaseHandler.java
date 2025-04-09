@@ -113,8 +113,8 @@ public class DataBaseHandler extends Thread {
             st.close();
             con.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
+            //ex.printStackTrace();
+            //System.out.println(ex.getMessage());
         }
     }
 
@@ -504,7 +504,7 @@ public class DataBaseHandler extends Thread {
         try {
             Class.forName(DRIVER_CLASS_NAME);
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             //System.exit(1);
         }
         DriverManager.setLoginTimeout(1);
@@ -517,7 +517,7 @@ public class DataBaseHandler extends Thread {
 
                 return (connection);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                //System.out.println(ex.getMessage());
                 try {
                     connection = DriverManager.getConnection(SubServer_URL,
                             CONSTANTS.USERNAME, CONSTANTS.PASSWORD);
@@ -525,7 +525,7 @@ public class DataBaseHandler extends Thread {
 
                     return (connection);
                 } catch (Exception ex2) {
-                    System.out.println(ex2.getMessage());
+                    //System.out.println(ex2.getMessage());
                 }
             }
         } else {
@@ -536,7 +536,7 @@ public class DataBaseHandler extends Thread {
 
                 return (connection);
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                //System.out.println(ex.getMessage());
                 connection = DriverManager.getConnection(MainServer_URL,
                         CONSTANTS.USERNAME, CONSTANTS.PASSWORD);
                 connection.setNetworkTimeout(Executors.newFixedThreadPool(2), 2000);

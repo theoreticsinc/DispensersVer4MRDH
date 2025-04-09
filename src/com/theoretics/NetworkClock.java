@@ -124,9 +124,9 @@ public class NetworkClock implements Runnable {
                     Thread.sleep(200);
                 }
                 Thread.sleep(200);
-                System.out.println(".");
+                //System.out.println(".");
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                //System.out.println(ex.getMessage());
             }
 //            ss.checkTemp();
             
