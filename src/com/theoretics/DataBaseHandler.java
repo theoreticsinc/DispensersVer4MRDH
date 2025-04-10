@@ -113,8 +113,8 @@ public class DataBaseHandler extends Thread {
             st.close();
             con.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println(ex.getMessage());
+            //ex.printStackTrace();
+            //System.out.println(ex.getMessage());
         }
     }
 
