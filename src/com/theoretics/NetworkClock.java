@@ -73,9 +73,9 @@ public class NetworkClock implements Runnable {
                 if (cards.isEmpty() == false) {
                     String cardFromReader = cards.get(0);
                     if (online == true) {
-                        System.out.print("ONLINE ");
-                        System.out.print("`/ ");
-                        System.out.println("✓");
+                        //System.out.print("ONLINE ");
+                        //System.out.print("`/ ");
+                        //System.out.println("✓");
                         //SAVE Card to DATABASE
                         boolean isValid = false;
                         boolean isUpdated = false;
@@ -88,6 +88,7 @@ public class NetworkClock implements Runnable {
                             System.out.println(cardFromReader + " isUpdated " + isUpdated);
                             System.out.println(cardFromReader + " isUpdated " + isUpdated);
                             //comms2POS("Dispenser, card number:" + cardFromReader + " , ");
+                            dbh.eraseEXTCRD(cardFromReader);
                             cards.remove(0);
                         } else {
                             //isValid = dbh.writeCGHEntryWithPix(CONSTANTS.entranceID, cardFromReader, "R", "");
@@ -107,7 +108,8 @@ public class NetworkClock implements Runnable {
                                 ex.printStackTrace();
                             }
                             System.out.println("Time On Card*" + cardFromReader + "* :: " + serverTime);
-
+                            dbh.eraseEXTCRD(cardFromReader);
+                            
                         }
 
                     } else if (online == false) {
@@ -124,9 +126,9 @@ public class NetworkClock implements Runnable {
                     Thread.sleep(200);
                 }
                 Thread.sleep(200);
-                System.out.println(".");
+                //System.out.println(".");
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                //System.out.println(ex.getMessage());
             }
 //            ss.checkTemp();
             

@@ -1,10 +1,9 @@
 /*Github Token
- * Modified for MRDH Apr 2025 07:55 AM
- * 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
+ * Modified for MRDH Apr 2025 17:29 PM
+ * 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
  */
 package com.theoretics;
 
-import com.google.gson.Gson;
 import com.pi4j.wiringpi.Spi;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -16,20 +15,13 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.pi4j.platform.PlatformManager;
-import com.pi4j.system.NetworkInfo;
 import com.pi4j.system.SystemInfo;
 import com.pi4j.wiringpi.Gpio;
-import com.theoretics.Convert;
-import com.theoretics.DateConversionHandler;
-import com.theoretics.NetworkClock;
-import com.theoretics.RaspRC522;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +38,7 @@ import org.apache.logging.log4j.Logger;
 
 public class MainStart {
 
-    String version = "v.3.0.9";
+    String version = "v.3.1.0";
     String entranceID = "Dispenser MRDH";
 
     String cardFromReader = "";
@@ -81,13 +73,13 @@ public class MainStart {
 
     //NOTE: Do not use GPIO 30-SDA0, 12-MOSI, 13-MISO, 14-DOES NOT WORK
 //    final GpioPinDigitalOutput testPin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_30, "TESTLED", PinState.LOW);
-    //Deployed Booth A
+
     final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05, "HDDLED", PinState.LOW);
 
     final GpioPinDigitalInput btnPower = gpio.provisionDigitalInputPin(RaspiPin.GPIO_04, PinPullResistance.PULL_UP);
     final GpioPinDigitalInput btnReset = gpio.provisionDigitalInputPin(RaspiPin.GPIO_20, PinPullResistance.PULL_UP);
 
-    //Deployed Booth B
+    //Deployed Unmanned Entry MRDH
     
     final GpioPinDigitalInput btnDispense = gpio.provisionDigitalInputPin(RaspiPin.GPIO_28, PinPullResistance.PULL_UP);
     final GpioPinDigitalInput cardOutOK = gpio.provisionDigitalInputPin(RaspiPin.GPIO_22, PinPullResistance.PULL_DOWN);
@@ -183,26 +175,25 @@ public class MainStart {
         System.out.println("Reader Ready!");
         //Testing Dispenser
         
-        
         transistorDispense.setState(true);
         Gpio.delay(1000);
         transistorDispense.setState(false);
         Gpio.delay(1000);
         System.out.println("Transistors Ready!");
         
-        /*
-        transistorReject.setState(false);
-        Gpio.delay(1000);
-        transistorReject.setState(true);
-        Gpio.delay(1000);
-        transistorReject.setState(false);
-        Gpio.delay(1000);
         
-        transistorReject.setState(true);
-        Gpio.delay(1000);
-        transistorReject.setState(false);
-        System.out.println("Transistors Ready!");
-        */
+//        transistorReject.setState(false);
+//        Gpio.delay(1000);
+//        transistorReject.setState(true);
+//        Gpio.delay(1000);
+//        transistorReject.setState(false);
+//        Gpio.delay(1000);
+//        
+//        transistorReject.setState(true);
+//        Gpio.delay(1000);
+//        transistorReject.setState(false);
+//        System.out.println("Transistors Ready!");
+        
 //
 //        //Testing Barrier Relay
 //        relayBarrier.setState(false);
@@ -377,6 +368,11 @@ public class MainStart {
 //                led1.high();
 //            }
             System.out.println("EOL");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(MainStart.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         /**
